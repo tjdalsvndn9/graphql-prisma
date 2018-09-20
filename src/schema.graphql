@@ -1,0 +1,35 @@
+# import Post,Game, GameOrderByInput from "./generated/prisma.graphql"
+
+type Query {
+  feed: [Post!]!
+  drafts: [Post!]!
+  post(id: ID!): Post
+  games(filter:String, skip:Int, first:Int, orderBy:GameOrderByInput): [Game!]!
+  game(id: ID!): Game!
+  user(email:String!):User!
+  users: [User!]!
+}
+
+type Mutation {
+  createDraft(title: String!, text: String): Post
+  deletePost(id: ID!): Post
+  publish(id: ID!): Post
+  createGame(found:String, isPopular:Boolean!,population:Int, name:String!): Game
+  updateGame(id: ID!, found:String, isPopular:Boolean, population:Int, name:String): Game
+  deleteGame(id: ID!): Game
+  signup(email:String!, password:String!): AuthPayload
+  login(email:String!,password:String!): AuthPayload
+}
+
+
+type AuthPayload{
+  token:String!,
+  user:User
+}
+
+
+type User{
+  id:ID!
+  email:String!
+  name:String
+}
